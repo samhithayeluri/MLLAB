@@ -1,0 +1,44 @@
+#KMeans
+import pandas as pd
+from sklearn.cluster import KMeans
+import matplotlib.pyplot as plt\
+km=KMeans(n_clusters=2)
+y=km.fit_predict(df)
+y
+df['cluster']=y
+km = KMeans(n_clusters=3)
+yp = km.fit_predict(df)
+yp
+
+#ELBOWPLOT
+sse=[]
+for i in range(1,11):
+    km=KMeans(n_clusters=i)
+    km.fit(data)
+    sse.append(km.inertia_)
+k_range=range(1,11)
+plt.xlabel('K')
+plt.ylabel('Sum of squared error')
+plt.plot(k_range,sse)
+
+df1 = df[df.cluster==0]
+df2 = df[df.cluster==1]
+df3 = df[df.cluster==2]
+plt.scatter(df1['petal length (cm)'],df1['petal width (cm)'],color='blue')
+plt.scatter(df2['petal length (cm)'],df2['petal width (cm)'],color='green')
+plt.scatter(df3['petal length (cm)'],df3['petal width (cm)'],color='yellow')
+
+
+#anotherexample
+X = dataset.iloc[:, :-1]
+label = {'Iris-setosa': 0,'Iris-versicolor': 1,
+'Iris-virginica': 2}
+y = [label[c] for c in dataset.iloc[:, -1]]
+model=KMeans(n_clusters=3,
+random_state=0).fit(X)
+print('The accuracy score of K-Mean:
+',metrics.accuracy_score(y,
+model.labels_))
+print('The Confusion matrixof
+K-Mean:\n',metrics.confusion_matrix(y,
+model.labels_))
