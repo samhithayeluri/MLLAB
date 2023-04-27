@@ -1,0 +1,41 @@
+from sklearn.datasets import fetch_openml
+dataset=fetch_openml('mnist_784')
+import numpy as np
+x,y=dataset['data'],dataset['target']
+x=np.array(x)
+y=np.array(y)
+x.shape
+x_train,x_test=x[:60000],x[60000:70000]
+y_train,y_test=y[:60000],y[60000:70000]
+#datavisualization
+var=x[120].reshape(28,28)
+import matplotlib.pyplot as plt
+import matplotlib
+plt.imshow(var, cmap=matplotlib.cm.binary,interpolation='nearest')
+#BAGGING ALGO
+def bagging():
+    idx1=np.random.randint(0,len(x_train),len(x_train))
+    bag1=x_train[idx1]
+    target=y_train[idx1]
+    return(bag1,target)
+bag1=bagging()
+bag2=bagging()
+bag3=bagging()
+from sklearn.tree import DecisionTreeClassifier
+dtc1=DecisionTreeClassifier()
+dtc1.fit(bag1[0],bag1[1])
+dtc2=DecisionTreeClassifier()
+dtc2.fit(bag2[0],bag2[1])
+dtc3=DecisionTreeClassifier()
+dtc3.fit(bag3[0],bag3[1])
+pred1=dtc1.predict(x_test)
+pred2=dtc2.predict(x_test)
+pred3=dtc3.predict(x_test)
+y_pred=[]
+for i in range(0,len(x_test)):
+    node=[pred1[i],pred2[i],pred3[i]]
+    majority=max(node,key=node.count)
+    y_pred.append(majority)
+y_pred=np.array(y_pred)
+from sklearn.metrics import accuracy_score
+print(accuracy_score(y_pred,y_test))
