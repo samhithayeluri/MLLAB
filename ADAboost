@@ -1,0 +1,26 @@
+import pandas as pd
+import numpy as np
+import sklearn
+from sklearn import datasets
+iris = datasets.load_iris()
+X = iris.data
+Y = iris.target
+iris.target_names
+iris.feature_names
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.3)
+from sklearn.ensemble import AdaBoostClassifier
+adb =from sklearn.svm import SVC
+from sklearn.ensemble import AdaBoostClassifier
+svc = SVC(probability = True, kernel='linear')
+adb = AdaBoostClassifier(n_estimators=100,base_estimator = svc, learning_rate= 0.01) AdaBoostClassifier()
+model = adb.fit(X_train, Y_train)
+y_pred = model.predict(X_test)
+from sklearn.metrics import confusion_matrix, classification_report, accuracy_score
+print(confusion_matrix(Y_test, y_pred))
+print(classification_report(Y_test, y_pred))
+print(accuracy_score(Y_test, y_pred))
+from sklearn.svm import SVC
+from sklearn.ensemble import AdaBoostClassifier
+svc = SVC(probability = True, kernel='linear')
+adb = AdaBoostClassifier(n_estimators=100,base_estimator = svc, learning_rate= 0.01)
